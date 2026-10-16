@@ -3,6 +3,7 @@ package com.example.myapplication.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
         editNumer.setOnFocusChangeListener((widok, maFokus) -> {
             if (!maFokus) {
                 aktualizujObrazy();
+                Log.d("Zdjecia", "Zmiana Zdjec");
             }
         });
 
@@ -71,16 +73,19 @@ public class MainActivity extends Activity {
 
         String tresc = "";
 
-        if(imie.isEmpty() || nazwisko.isEmpty()) {
+        if(!DaneValidator.czyImiePoprawne(imie) || !DaneValidator.czyNazwiskoPoprawne(nazwisko)) {
             tresc = "Wprowadz dane";
+            Log.d("Dzialanie", tresc);
         } else {
             tresc = imie + " " + nazwisko + " kolor oczu " + pobierzKolorOczu();
+            Log.d("Dzialanie", tresc);
         }
 
         new AlertDialog.Builder(this)
                 .setMessage(tresc)
                 .setPositiveButton("OK", null)
                 .show();
+
     }
 
     private String pobierzKolorOczu() {
